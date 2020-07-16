@@ -11,7 +11,7 @@ def translate_speech_to_text():
     # Sets source and target languages.
     # Replace with the languages of your choice, from list found here: https://aka.ms/speech/sttt-languages
     fromLanguage = 'en-US'
-    toLanguage = 'de'
+    toLanguage = 'zh-Hans' # 'fr' # 'de'
     translation_config.speech_recognition_language = fromLanguage
     translation_config.add_target_language(toLanguage)
 
@@ -37,7 +37,7 @@ def translate_speech_to_text():
     # Check the result
     if result.reason == speechsdk.ResultReason.TranslatedSpeech:
         print("RECOGNIZED '{}': {}".format(fromLanguage, result.text))
-        print("TRANSLATED into {}: {}".format(toLanguage, result.translations['de']))
+        print("TRANSLATED into {}: {}".format(toLanguage, result.translations[toLanguage]))
     elif result.reason == speechsdk.ResultReason.RecognizedSpeech:
         print("RECOGNIZED: {} (text could not be translated)".format(result.text))
     elif result.reason == speechsdk.ResultReason.NoMatch:
