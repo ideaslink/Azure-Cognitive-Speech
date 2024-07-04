@@ -1,8 +1,9 @@
 import azure.cognitiveservices.speech as speechsdk
+import secrets
 
 # Creates an instance of a speech config with specified subscription key and service region.
 # Replace with your own subscription key and service region (e.g., "westus").
-speech_key, service_region = "f7b1af1399664520806f4b0724765a40", "eastus"
+speech_key, service_region = secrets.SPEECH_KEY, secrets.SERVICE_REGION
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
 # uncomment this line to change the voice used for synthesis

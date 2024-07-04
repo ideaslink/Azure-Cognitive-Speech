@@ -1,6 +1,8 @@
 import azure.cognitiveservices.speech as speechsdk
+import secrets
 
-speech_key, service_region =  "f7b1af1399664520806f4b0724765a40", "eastus"
+speech_key, service_region = secrets.AZURE_COGNITIVE_SPEECH_SERVICES_KEY, secrets.SERVICE_REGION
+
 
 def translate_speech_to_text():
 
@@ -11,7 +13,7 @@ def translate_speech_to_text():
     # Sets source and target languages.
     # Replace with the languages of your choice, from list found here: https://aka.ms/speech/sttt-languages
     fromLanguage = 'en-US'
-    toLanguage = 'zh-Hans' # 'fr' # 'de'
+    toLanguage = 'zh-Hans'  # 'fr' # 'de'
     translation_config.speech_recognition_language = fromLanguage
     translation_config.add_target_language(toLanguage)
 
@@ -46,5 +48,6 @@ def translate_speech_to_text():
         print("CANCELED: Reason={}".format(result.cancellation_details.reason))
         if result.cancellation_details.reason == speechsdk.CancellationReason.Error:
             print("CANCELED: ErrorDetails={}".format(result.cancellation_details.error_details))
+
 
 translate_speech_to_text()
