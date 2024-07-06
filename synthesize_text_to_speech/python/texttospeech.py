@@ -21,11 +21,11 @@ result = speech_synthesizer.speak_text_async(text).get()
 
 # Checks result.
 if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-    print("Speech synthesized to speaker for text [{}]".format(text))
+    print(f"Speech synthesized to speaker for text: {text}")
 elif result.reason == speechsdk.ResultReason.Canceled:
     cancellation_details = result.cancellation_details
-    print("Speech synthesis canceled: {}".format(cancellation_details.reason))
+    print(f"Speech synthesis canceled: {cancellation_details.reason}")
     if cancellation_details.reason == speechsdk.CancellationReason.Error:
         if cancellation_details.error_details:
-            print("Error details: {}".format(cancellation_details.error_details))
+            print(f"Error details: {cancellation_details.error_details}")
     print("Did you update the subscription info?")
