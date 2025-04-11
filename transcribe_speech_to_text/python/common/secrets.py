@@ -1,7 +1,5 @@
 """ holds credentials and secrets info """
 
-# Azure cognitive service credentials
-# AZURE_COGNITIVE_SPEECH_SERVICES_KEY = "f7b1af1399664520806f4b0724765a40"
 SERVICE_REGION = "eastus"
-SPEECH_KEY = "f7b1af1399664520806f4b0724765a40"
-AUDIO_FILENAME = '../../media/trm.wav'
+SPEECH_KEY = "28e45f9091c841d199822d8b8e9f2fec" # "SPEECH_KEY"
+AUDIO_FILENAME = '../../media/narration.wav'

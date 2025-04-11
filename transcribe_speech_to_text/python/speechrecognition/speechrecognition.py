@@ -5,14 +5,19 @@
 
 """
 import wave
+import sys
+import os
+
+# Add the parent directory of 'transcribe_speech_to_text' to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import azure.cognitiveservices.speech as speechsdk
 import time
-from transcribe_speech_to_text.python.common import secrets
-
+from common import secrets
 
 class SpeechRecognition:
     # Creates an instance of a speech config
+    # speech_key, service_region = os.environ.get('SPEECH_KEY'), secrets.SERVICE_REGION
     speech_key, service_region = secrets.SPEECH_KEY, secrets.SERVICE_REGION
     speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
@@ -27,16 +32,16 @@ class SpeechRecognition:
         print("Recognizing speech...")
 
         def callback_stop(e):
-            print('closing on {}'.format(e))
+            print(f'closing on {e}')
             nonlocal done
             done = True
 
         # Connect callbacks to the events fired by the speech recognizer
         # speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
-        speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
-        speech_recognizer.session_started.connect(lambda evt: print('SESSION STARTED: {}'.format(evt)))
-        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
-        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+        speech_recognizer.recognized.connect(lambda evt: print(f"RECOGNIZED: {evt}"))
+        speech_recognizer.session_started.connect(lambda evt: print(f"SESSION STARTED: {evt}"))
+        speech_recognizer.session_stopped.connect(lambda evt: print(f'SESSION STOPPED {evt}'))
+        speech_recognizer.canceled.connect(lambda evt: print(f'CANCELED {evt}'))
         # stop continuous recognition on either session stopped or canceled events
         speech_recognizer.session_stopped.connect(callback_stop)
         speech_recognizer.canceled.connect(callback_stop)
@@ -63,9 +68,9 @@ class SpeechRecognition:
 
                 self.sample_width = self._file_h.getsampwidth()
 
-                print("channels: {}".format(self._file_h.getnchannels()))
-                print("sampwidth: {}".format(self._file_h.getsampwidth()))
-                print("framerate: {}".format(self._file_h.getframerate()))
+                print(f"channels: {self._file_h.getnchannels()}")
+                print(f"sampwidth: {self._file_h.getsampwidth()}")
+                print(f"framerate: {self._file_h.getframerate()}")
 
                 assert self._file_h.getnchannels() == 1
                 assert self._file_h.getsampwidth() == 2
@@ -108,11 +113,11 @@ class SpeechRecognition:
             done = True
 
         # Connect callbacks to the events fired by the speech recognizer
-        speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
-        speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
-        speech_recognizer.session_started.connect(lambda evt: print('SESSION STARTED: {}'.format(evt)))
-        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
-        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+        speech_recognizer.recognizing.connect(lambda evt: print(f'RECOGNIZING: {evt}'))
+        speech_recognizer.recognized.connect(lambda evt: print(f'RECOGNIZED: {evt}'))
+        speech_recognizer.session_started.connect(lambda evt: print(f'SESSION STARTED: {evt}'))
+        speech_recognizer.session_stopped.connect(lambda evt: print(f'SESSION STOPPED {evt}'))
+        speech_recognizer.canceled.connect(lambda evt: print(f'CANCELED {evt}'))
         # stop continuous recognition on either session stopped or canceled events
         speech_recognizer.session_stopped.connect(stop_cb)
         speech_recognizer.canceled.connect(stop_cb)
@@ -138,17 +143,17 @@ class SpeechRecognition:
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
         # Connect callbacks to the events fired by the speech recognizer
-        speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
-        speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
-        speech_recognizer.session_started.connect(lambda evt: print('SESSION STARTED: {}'.format(evt)))
-        speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
-        speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
+        speech_recognizer.recognizing.connect(lambda evt: print(f'RECOGNIZING: {evt}'))
+        speech_recognizer.recognized.connect(lambda evt: print(f'RECOGNIZED: {evt}'))
+        speech_recognizer.session_started.connect(lambda evt: print(f'SESSION STARTED: {evt}'))
+        speech_recognizer.session_stopped.connect(lambda evt: print(f'SESSION STOPPED {evt}'))
+        speech_recognizer.canceled.connect(lambda evt: print(f'CANCELED {evt}'))
 
         # The number of bytes to push per buffer
         n_bytes = 3200
         wav_fh = wave.open(filename)
 
-        print("filename: {}".format(filename))
+        print(f"filename: {filename}")
 
         # start continuous speech recognition
         speech_recognizer.start_continuous_recognition()

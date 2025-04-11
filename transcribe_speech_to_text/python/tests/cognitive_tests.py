@@ -1,23 +1,26 @@
 import unittest
-# import speechrecognition.speechrecognition as sr
-# from common import secrets
-# import speechrecognition.speechrecognition as sr
-import transcribe_speech_to_text.python.speechrecognition.speechrecognition as sr
-from transcribe_speech_to_text.python.common import secrets
+import sys
+import os
 
+# Add the parent directory of 'transcribe_speech_to_text' to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from speechrecognition.speechrecognition import SpeechRecognition
+# transcribe_speech_to_text.python.speechrecognition.speechrecognition import SpeechRecognition
+from common import secrets
 
 class CognitiveTests(unittest.TestCase):
-    audio_filename = secrets.AUDIO_FILENAME # '../../media/trm.wav'
+    audio_filename = secrets.AUDIO_FILENAME
 
     def setUp(self) -> None:
-        self.stcobj = sr.SpeechRecognition()
+        self.stcobj = SpeechRecognition()
         if len(self.audio_filename) == 0:
             self.audio_filename = input("Enter audio file: ")
 
-    # @unittest.skip
     def test_speech_continous_fromfile(self):
         """ speech continuous recognition from file """
         self.stcobj.speech_recognition_continuous_from_file(filename=self.audio_filename)
+        self.assertTrue(True)
 
     @unittest.skip
     def test_speech_continuous_pull_stream(self):
