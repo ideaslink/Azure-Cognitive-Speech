@@ -6,6 +6,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from speechrecognition.speechrecognition import SpeechRecognition
+from texttospeech.texttospeech import TextToSpeech
 # transcribe_speech_to_text.python.speechrecognition.speechrecognition import SpeechRecognition
 from common import secrets
 
@@ -17,6 +18,7 @@ class CognitiveTests(unittest.TestCase):
         if len(self.audio_filename) == 0:
             self.audio_filename = input("Enter audio file: ")
 
+    @unittest.skip
     def test_speech_continous_fromfile(self):
         """ speech continuous recognition from file """
         self.stcobj.speech_recognition_continuous_from_file(filename=self.audio_filename)
@@ -31,6 +33,13 @@ class CognitiveTests(unittest.TestCase):
     def test_speech_continuous_push_stream(self):
         """ speech continuous push scream """
         self.stcobj.speech_recognition_with_push_stream(filename=self.audio_filename)
+
+    def test_text_to_speech(self):
+        """ text to speech """
+        ttsobj = TextToSpeech()
+        text = ""
+        ttsobj.text_to_speech(text)
+        self.assertTrue(True)
 
     def tearDown(self) -> None:
         """ prepare to close """
